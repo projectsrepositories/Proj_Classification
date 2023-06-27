@@ -30,7 +30,7 @@ def plot_confusion_matrix(y_test, yhats, methods, labels, num_run):
     plt.tight_layout()
     plt.subplots_adjust(hspace=.9, top=0.9)
     plt.suptitle(f'Confusion Matrix for the last of the {num_run} iterations', fontweight ="bold")
-    plt.savefig('../images/Confusion_matrix_for_last_run.png',bbox_inches='tight')
+    plt.savefig('../plots/Confusion_matrix_for_last_run.png',bbox_inches='tight')
     plt.show()
 
 def plot_boxplot(list_df, titles, num_run):
@@ -47,7 +47,7 @@ def plot_boxplot(list_df, titles, num_run):
     plt.tight_layout()
     plt.subplots_adjust(hspace=.9, top=0.9)
     plt.suptitle(f'Randomly selecting Test sets in each of the {num_run} iterations', fontweight ="bold")
-    plt.savefig(f'../images/Metrics_{num_run}_box.png',bbox_inches='tight')
+    plt.savefig(f'../plots/Metrics_{num_run}_box.png',bbox_inches='tight')
     plt.show()    
 
 def plot_bar_charts(list_df_metrics, titles):
@@ -72,7 +72,7 @@ def plot_bar_charts(list_df_metrics, titles):
     plt.suptitle('Cross-validation (CV) vs Randomly selecting Test sets', fontweight ="bold")
     cv = list_df_metrics[0].columns[1]
     num_run = list_df_metrics[0].columns[0]
-    plt.savefig(f'../images/Metrics_{cv}_{num_run}_bar.png',bbox_inches='tight')
+    plt.savefig(f'../plots/Metrics_{cv}_{num_run}_bar.png',bbox_inches='tight')
     plt.show()     
 
 def evaluate_models(y_test, yhat, yhat_prob):
