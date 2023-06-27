@@ -1,3 +1,5 @@
+This is a sample project for binary classification.
+
 1. To install required packages for your environment from *requirements.txt*, run the following command:   
 *$ pip install -r requirements.txt*  
 
