@@ -67,12 +67,12 @@ def random_split():
     
     # Create boxplots for accuracy, roc-auc, recall and precision for 
     # for all iterations to check for variance, outliers, skewness.
-    print('Predictive performance of the ML methods for the randomly selected '
+    print('\n\nPredictive performance of the ML methods for the randomly selected '
            'test sets in each iteration')
     analysis.plot_boxplot(df_list, titles, params.num_run)
     
     #yhats used here to plot confusion matrix for the last iteration only.
-    print('Confusion matrix for the last iteration of the randomly selected test sets. ')
+    print('\n\nConfusion matrix for the last iteration of the randomly selected test sets. ')
     analysis.plot_confusion_matrix(data[3], yhats, model_names, params.labels, params.num_run)
 
 
@@ -95,7 +95,7 @@ def cross_validation(list_df_metrics):
     for i in range(len(zipped_list)):
         list_df_metrics[i][f'CV{params.cv}'] = zipped_list[i]    
         list_df_metrics[i].to_csv(f"../output/ {filenames[i]}")
-    print('Comparison of the average predictive performances of the two methods:')
+    print('\n\nComparison of the average predictive performances of the two methods:')
     print('1: Randomly selecting test set in each of the n iterations.')
     print('2: Performing k-fold cross-validation.')
     analysis.plot_bar_charts(list_df_metrics, titles)
