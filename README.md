@@ -1,4 +1,8 @@
-This is a sample project for binary classification.
+This is a sample project for binary classification using 4 machine learning methods: 
+- Logistic Regression (LR) 
+- Random Forest (RF)
+- K Neighbors (KN)
+- Support Vector Machine (SVM)
 
 1. To install required packages for your environment from *requirements.txt*, run the following command:   
 *$ pip install -r requirements.txt*  
