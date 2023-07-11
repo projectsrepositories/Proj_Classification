@@ -42,7 +42,6 @@ def plot_boxplot(list_df, titles, num_run):
         for ax_cur in row:
             list_df[index].plot(kind='box', ax=ax_cur)
             ax_cur.set_title(titles[index])
-            ax_cur.set_xlabel('ML Methods')
             index+=1
     plt.tight_layout()
     plt.subplots_adjust(hspace=.9, top=0.9)
@@ -61,8 +60,7 @@ def plot_bar_charts(list_df_metrics, titles):
             ymax = list_df_metrics[index].values.max()
 
             list_df_metrics[index].plot(kind='bar', ax = ax_cur)  
-            ax_cur.set_title(titles[index])    
-            ax_cur.set_xlabel('ML Methods')        
+            ax_cur.set_title(titles[index])            
             ax_cur.set_ylim(bottom=ymin-0.05,top=ymax+0.1)
             ax_cur.yaxis.grid(True, linestyle='-', which='major', color='lightgrey',
                alpha=0.5)
