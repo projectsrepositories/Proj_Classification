@@ -8,11 +8,9 @@ warnings.filterwarnings("ignore")
 
 model_names = ['LR', 'RF', 'KN', 'SVM']
 titles = ['Accuracy', 'ROC_AUC', 'Recall', 'Precision']
-
 np.random.seed(params.seed)
 
-def iteration(iterno, data, df_acc, df_auc, df_pre, df_rec):
-     
+def iteration(iterno, data, df_acc, df_auc, df_pre, df_rec):     
     # yhats is reset in every iteration and thus, retained 
     # only for the last iteration by the calling function
     yhats = []
@@ -40,19 +38,17 @@ def random_split():
     # Perform random-split to check the out-of-sample predictive performance
     # Binary classification performed for num_run no. of iterations
     # Random test set selected in each iteration
-
     df_acc = pd.DataFrame(columns=model_names)
     df_auc = pd.DataFrame(columns=model_names)
     df_rec = pd.DataFrame(columns=model_names)
     df_pre = pd.DataFrame(columns=model_names)
-    
+
     df_list = [df_acc, df_auc, df_rec, df_pre]
     df_avg_list = [] # also a list of dataframes
     yhats = []
     filenames = ['accuracy', 'auc', 'recall', 'precision']
 
     for i in range(params.num_run):
-
         # data i.e. X_train, X_test, y_train, y_test are selected in each iteration
         data = preprocess.split_data(X, y, params.test_size)
 
@@ -73,11 +69,7 @@ def random_split():
     
     #yhats used here to plot confusion matrix for the last iteration only.
     print('\n\nConfusion matrix for the last iteration of the randomly selected test sets. ')
-    analysis.plot_confusion_matrix(data[3], yhats, model_names, params.labels, params.num_run)
-
-
-    
-    
+    analysis.plot_confusion_matrix(data[3], yhats, model_names, params.labels, params.num_run)      
     return df_avg_list
 
 def cross_validation(list_df_metrics):

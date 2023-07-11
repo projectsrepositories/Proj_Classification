@@ -2,7 +2,7 @@
 #get_ipython().run_line_magic('matplotlib', 'inline')
 
 from sklearn.metrics import confusion_matrix
-from sklearn.metrics import classification_report, roc_auc_score, accuracy_score
+from sklearn.metrics import roc_auc_score, accuracy_score
 from sklearn.metrics import recall_score, precision_score
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -12,8 +12,6 @@ def plot_confusion_matrix(y_test, yhats, methods, labels, num_run):
     # Plot the confusion-matrix for the last iteration of the random_split predictions.
     nrows = math.ceil(len(methods)/2)
     ncols = 2
-    row_idx = 0
-    col_idx = 0
     fig, ax= plt.subplots(nrows = nrows, ncols = ncols)
     index = 0
     for row in ax:
