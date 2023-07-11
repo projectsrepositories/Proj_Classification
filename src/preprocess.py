@@ -1,4 +1,3 @@
-# 1. Data Preprocessing
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import pandas as pd
