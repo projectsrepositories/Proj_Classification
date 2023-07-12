@@ -79,8 +79,10 @@ def cross_validation(list_df_metrics):
     metrics_kn = methods_cv.cv_kneighbors(X, y, params.cv)
     metrics_sv = methods_cv.cv_svc(X, y, params.cv)
     
-    filenames = [f'cv{params.cv}_numrun{params.num_run}_acc.csv', f'cv{params.cv}_numrun{params.num_run}_auc.csv', 
-                 f'cv{params.cv}_numrun{params.num_run}_rec.csv', f'cv{params.cv}_numrun{params.num_run}_pre.csv']
+    filenames = [f'cv{params.cv}_numrun{params.num_run}_acc_Avg.csv', 
+                 f'cv{params.cv}_numrun{params.num_run}_auc_Avg.csv', 
+                 f'cv{params.cv}_numrun{params.num_run}_rec_Avg.csv', 
+                 f'cv{params.cv}_numrun{params.num_run}_pre_Avg.csv']
     
     # Convert ML-methods-wise lists to metrics-wise lists and append as a new column in df
     zipped_list = list(zip(metrics_lr, metrics_rf, metrics_kn, metrics_sv))    
