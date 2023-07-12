@@ -4,7 +4,7 @@ This is a sample project for binary classification using 4 machine learning meth
 - K Neighbors (KN)
 - Support Vector Machine (SVM)
 
-* For the models, assign the predictor variable names as elements of the list *X_columns* in the file *params.py*.
+###For the models, assign the predictor variable names as elements of the list *X_columns* in the file *params.py*.
 
 1. To install required packages for your environment from *requirements.txt*, run the following command:   
 *$ pip install -r requirements.txt*  
