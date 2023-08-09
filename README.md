@@ -8,14 +8,14 @@ This is a sample project for binary classification using 4 machine learning meth
 *$ pip install -r requirements.txt*  
 
 2. To run the project from command line  
-    - First, comment (insert # to) the second line in the file *src/analysis.py* as below:  
+    - First, comment (insert # to) the second line in the file *src/visualizationo.py* as below:  
       *#get_ipython().run_line_magic('matplotlib', 'inline')*  
 
     - Second, execute the following command:  
       *$ python binary_classification.py*
 
 3. To run the project from the jupyter notebook, 
-    - First, uncomment (remove # from) the following first line in the file *src/analysis.py* as below:  
+    - First, uncomment (remove # from) the following first line in the file *src/visualization.py* as below:  
       *get_ipython().run_line_magic('matplotlib', 'inline')*  
 
     - Second, execute the following code in the *code cell*:       
