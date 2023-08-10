@@ -1,4 +1,7 @@
-"""Implement ML methods with cross-validation."""
+"""Implement ML methods with cross-validation.
+
+Return the accuracy, auc, recall, and precision of each model. 
+"""
 
 from sklearn.model_selection import cross_validate
 from sklearn.linear_model import LogisticRegression

@@ -14,7 +14,7 @@ def plot_confusion_matrix(y_test, yhats, methods, labels, num_run):
     # Plot the confusion-matrix for the last iteration of the random_split predictions.
     nrows = math.ceil(len(methods)/2)
     ncols = 2
-    fig, ax= plt.subplots(nrows=nrows, ncols=ncols, figsize=(8, 5))
+    fig, ax= plt.subplots(nrows=nrows, ncols=ncols, figsize=(8,5))
     index = 0
     col_idx = 0
     row_idx = 0
@@ -51,7 +51,7 @@ def plot_boxplot(list_df, titles, num_run):
     
     # Create 4 boxplots (accuracy, auc, recall, precision) in the same file.
     # Each boxplot is for the total iterations results for the random_split predictions.
-    fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8, 5))
+    fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8,5))
     index = 0    
     for row in ax:
         for ax_cur in row:
@@ -68,7 +68,7 @@ def plot_bar_charts(list_df_metrics, titles):
     
     # Create 4 bar charts (accuracy, auc, recall and precision) in the same file.
     # Each bar chart compares the random_split results against cross-validation results.
-    fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8, 5))
+    fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(8,5))
     index = 0
     for row in ax:
         for ax_cur in row:

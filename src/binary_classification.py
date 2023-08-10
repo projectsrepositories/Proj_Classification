@@ -47,10 +47,10 @@ def random_split():
 
         # yhats is reset in each iteration but acc, auc, rec, pre, and pre are appended
         *df_list, yhats = iteration(i, data, *df_list)
-    for i in range(len(df_list)):
-        df_list[i].to_csv(f"../output/{filenames[i]}{params.num_run}.csv", index=False)
 
-        # Save the averages of the metrics into their respective dataframes.
+    # Save all the evaluation metric values to the files and calculate their averages.
+    for i in range(len(df_list)):
+        df_list[i].to_csv(f"../output/{filenames[i]}{params.num_run}.csv", index=False)        
         df_avg_list.append(df_list[i].mean(axis=0).to_frame())
         df_avg_list[i].columns = [f'Avg{params.num_run}']
     
@@ -79,7 +79,8 @@ def iteration(iterno, data, df_acc, df_auc, df_pre, df_rec):
                                'KN': metrics_kn['rec'], 'SVM': metrics_svc['rec']}])
     df_pre_new = pd.DataFrame([{'LR': metrics_lr['pre'], 'RF': metrics_rf['pre'], 
                                'KN': metrics_kn['pre'], 'SVM': metrics_svc['pre']}])
-    # add new row for this iteration to the dataframes
+    
+    # Add new row for this iteration to the dataframes
     df_acc = pd.concat([df_acc, df_acc_new]) 
     df_auc = pd.concat([df_auc, df_auc_new]) 
     df_rec = pd.concat([df_rec, df_rec_new]) 

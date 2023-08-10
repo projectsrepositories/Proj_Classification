@@ -1,4 +1,7 @@
-"""Implement machine learning(ML) methods."""
+"""Implement machine learning(ML) methods.
+
+Return the accuracy, auc, recall, and precision of each model. 
+"""
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier

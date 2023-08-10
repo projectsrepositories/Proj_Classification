@@ -17,7 +17,7 @@ This is a sample project for binary classification using 4 machine learning meth
       *import binary_classification* 
 
 3. To run the project from command line  
-    - First, comment (if uncommented) the second line of code in the file *src/visualizationo.py* as below:  
+    - First, comment (if uncommented) the second line of code in the file *src/visualization.py* as below:  
       *#get_ipython().run_line_magic('matplotlib', 'inline')*  
 
     - Second, execute the following command:  
