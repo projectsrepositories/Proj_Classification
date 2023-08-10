@@ -11,14 +11,14 @@ This is a sample project for binary classification using 4 machine learning meth
 
 2. To run the project from the jupyter notebook, 
     - First, uncomment (if commented) the following second line of code in *src/visualization.py* as below:  
-      *get_ipython().run_line_magic('matplotlib', 'inline')*  
+      ```get_ipython().run_line_magic('matplotlib', 'inline')```  
 
     - Second, execute the following code in the *code cell*:       
-      *import binary_classification* 
+      ```import binary_classification``` 
 
 3. To run the project from command line  
     - First, comment (if uncommented) the second line of code in the file *src/visualization.py* as below:  
-      *#get_ipython().run_line_magic('matplotlib', 'inline')*  
+      ```#get_ipython().run_line_magic('matplotlib', 'inline')```
 
     - Second, execute the following command:  
       *$ python binary_classification.py*     
