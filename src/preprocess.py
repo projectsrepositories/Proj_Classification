@@ -1,3 +1,5 @@
+""" Read and preprocess the data. """
+
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import pandas as pd
@@ -5,7 +7,6 @@ import numpy as np
 import params
 
 def get_data():
-    # Get the data for modeling.
     df = pd.read_csv(params.filename_ip_data)    
     X = np.asarray(df[params.X_columns])    
     y = np.asarray(df[params.y_column].astype('int'))

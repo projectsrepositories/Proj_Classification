@@ -1,8 +1,17 @@
+"""Perform binary classification.
+
+Parameters for binary classification can be set in the file /src/params.py.
+
+Outputs of binary classification:
+1. Performance evaluation output location: /output/
+2. Plots output location: /plots/
+"""
+
 import numpy as np
 import pandas as pd
 import csv
 import methods_ml, methods_cv, params
-import preprocess, analysis
+import preprocess, visualization
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -10,9 +19,52 @@ model_names = ['LR', 'RF', 'KN', 'SVM']
 titles = ['Accuracy', 'ROC_AUC', 'Recall', 'Precision']
 np.random.seed(params.seed)
 
-def iteration(iterno, data, df_acc, df_auc, df_pre, df_rec):     
-    # yhats is reset in every iteration and thus, retained 
-    # only for the last iteration by the calling function
+def random_split():  
+    """Check the out-of-sample predictive performance using random-split.
+    
+    Perform random-split to select random test set in each iteration.
+    
+    Returns
+    -------
+    list: A list of dataframes containing averages of the performance metrics.
+    """
+    
+    df_acc = pd.DataFrame(columns=model_names)
+    df_auc = pd.DataFrame(columns=model_names)
+    df_rec = pd.DataFrame(columns=model_names)
+    df_pre = pd.DataFrame(columns=model_names)
+
+    df_list = [df_acc, df_auc, df_rec, df_pre]
+    df_avg_list = []  # List of dataframes
+    yhats = []
+    filenames = ['accuracy', 'auc', 'recall', 'precision']
+
+    # Perform binary classification for num_run iterations.
+    for i in range(params.num_run):
+        
+        # Data i.e. X_train, X_test, y_train, y_test are selected in each iteration
+        data = preprocess.split_data(X, y, params.test_size)
+
+        # yhats is reset in each iteration but acc, auc, rec, pre, and pre are appended
+        *df_list, yhats = iteration(i, data, *df_list)
+    for i in range(len(df_list)):
+        df_list[i].to_csv(f"../output/{filenames[i]}{params.num_run}.csv", index=False)
+
+        # Save the averages of the metrics into their respective dataframes.
+        df_avg_list.append(df_list[i].mean(axis=0).to_frame())
+        df_avg_list[i].columns = [f'Avg{params.num_run}']
+    
+    # Create boxplots for accuracy, roc-auc, recall and precision.
+    print('\n\nPredictive performance of the ML methods for the randomly selected '
+           'test sets in each iteration')
+    visualization.plot_boxplot(df_list, titles, params.num_run)
+    
+    # Plot confusion matrix for the last iteration only using yhats.
+    print('\n\nConfusion matrix for the last iteration of the randomly selected test sets. ')
+    visualization.plot_confusion_matrix(data[3], yhats, model_names, params.labels, params.num_run)      
+    return df_avg_list
+
+def iteration(iterno, data, df_acc, df_auc, df_pre, df_rec):    
     yhats = []
     metrics_lr, yhats = methods_ml.ml_logistic_reg(*data, yhats)
     metrics_rf, yhats = methods_ml.ml_rf(*data, yhats)
@@ -34,45 +86,16 @@ def iteration(iterno, data, df_acc, df_auc, df_pre, df_rec):
     df_pre = pd.concat([df_pre, df_pre_new]) 
     return [df_acc, df_auc, df_rec, df_pre, yhats]
 
-def random_split():  
-    # Perform random-split to check the out-of-sample predictive performance
-    # Binary classification performed for num_run no. of iterations
-    # Random test set selected in each iteration
-    df_acc = pd.DataFrame(columns=model_names)
-    df_auc = pd.DataFrame(columns=model_names)
-    df_rec = pd.DataFrame(columns=model_names)
-    df_pre = pd.DataFrame(columns=model_names)
-
-    df_list = [df_acc, df_auc, df_rec, df_pre]
-    df_avg_list = [] # also a list of dataframes
-    yhats = []
-    filenames = ['accuracy', 'auc', 'recall', 'precision']
-
-    for i in range(params.num_run):
-        # data i.e. X_train, X_test, y_train, y_test are selected in each iteration
-        data = preprocess.split_data(X, y, params.test_size)
-
-        # yhats is reset in each iteration but acc, auc, rec, pre, and pre are appended
-        *df_list, yhats = iteration(i, data, *df_list)
-    for i in range(len(df_list)):
-        df_list[i].to_csv(f"../output/{filenames[i]}{params.num_run}.csv", index=False)
-
-        # Save the averages of the metrics into their respective dataframes.
-        df_avg_list.append(df_list[i].mean(axis=0).to_frame())
-        df_avg_list[i].columns = [f'Avg{params.num_run}']
-    
-    # Create boxplots for accuracy, roc-auc, recall and precision for 
-    # for all iterations to check for variance, outliers, skewness.
-    print('\n\nPredictive performance of the ML methods for the randomly selected '
-           'test sets in each iteration')
-    analysis.plot_boxplot(df_list, titles, params.num_run)
-    
-    #yhats used here to plot confusion matrix for the last iteration only.
-    print('\n\nConfusion matrix for the last iteration of the randomly selected test sets. ')
-    analysis.plot_confusion_matrix(data[3], yhats, model_names, params.labels, params.num_run)      
-    return df_avg_list
-
 def cross_validation(list_df_metrics):
+    """Check the out-of-sample predictive performance using cross-validation.
+    
+    Parameters
+    ----------
+    list_df_metrics : list
+        A list of dataframes for averages of the performance metrics of the 
+        random-split method.      
+    """
+    
     # Perform cross-validation to check the out-of-sample predictive performance.
     metrics_lr = methods_cv.cv_logistic_reg(X, y, params.cv)
     metrics_rf = methods_cv.cv_rf(X, y, params.cv)
@@ -91,11 +114,18 @@ def cross_validation(list_df_metrics):
         list_df_metrics[i].to_csv(f"../output/ {filenames[i]}")
     print('\n\nComparison of the average predictive performances of the two methods:')
     print('1: Randomly selecting test set in each of the n iterations.')
+    print('   AVG10 means average of 10 iterations.')
     print('2: Performing k-fold cross-validation.')
-    analysis.plot_bar_charts(list_df_metrics, titles)
+    print('   CV5 means 5-fold cross-validation.')
+    
+    # Plot bar charts to compare the performances of the CV and random-split methods.
+    visualization.plot_bar_charts(list_df_metrics, titles)
 
+# Read and preprocess data for modeling and prediction.
 X, y = preprocess.get_data()
 X = preprocess.normalize_data(X, X)
 
-list_df_metrics = random_split() # returns a list of dataframes
+# Call functions that implements iterations of ML methods with two techniques.
+# The two techniques are random-split and cross-validation.
+list_df_metrics = random_split() 
 cross_validation(list_df_metrics)

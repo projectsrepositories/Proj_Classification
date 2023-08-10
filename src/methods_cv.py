@@ -1,10 +1,11 @@
+"""Implement ML methods with cross-validation."""
+
 from sklearn.model_selection import cross_validate
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 
-# Cross-validation implementation of the machine learning methods
 def cv_logistic_reg(X, y, cv=10):
     lr = LogisticRegression(C=0.01, solver='liblinear')
     lr_cv = cross_validate(lr, X, y, cv=cv, scoring=('accuracy', 'roc_auc', 'recall','precision'), 
@@ -31,7 +32,8 @@ def cv_rf(X, y, cv=10):
     return get_metrics_mean(rf_cv)
 
 def get_metrics_mean(cv):
-    # Return the mean of the cross-validation metrics used here for the test data. 
+    
+    # Return the mean of the cross-validation metrics for the test data. 
     accuracy_test = cv['test_accuracy'].mean()
     roc_auc_test = cv['test_roc_auc'].mean()
     recall_test = cv['test_recall'].mean()
