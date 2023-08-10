@@ -1,3 +1,5 @@
+### Binary Classification
+
 This is a sample project for binary classification using 4 machine learning methods: 
 - Logistic Regression (LR) 
 - Random Forest (RF)
